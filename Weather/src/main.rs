@@ -1,3 +1,5 @@
+use std::net::SocketAddr;
+
 use tonic::{Request, Response, Status};
 use tonic_reflection::server::Builder;
 
@@ -20,7 +22,8 @@ impl WeatherService for StructWeatherService {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = "127.0.0.1:8080".parse()?;
+    //let addr = "127.0.0.1:8080".parse()?;
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
     let weather_service = StructWeatherService {};
     tonic::transport::Server::builder()
         .add_service(WeatherServiceServer::new(weather_service))

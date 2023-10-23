@@ -1,53 +1,31 @@
+## install protoc
 ```bash
-   13  sudo apt-get update
-   14  sudo apt-get install -y protobuf-compiler
+sudo apt-get update
+sudo apt-get install -y protobuf-compiler
 ```
 
-```rust
-mod hello {
-    tonic::include_proto!("hello");
+## install grpcurl
+```bash
+# install asdf
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.13.1
+asdf
+. "$HOME/.asdf/asdf.sh"
+asdf
+# install grpcrl
+asdf plugin add grpcurl
+asdf list all grpcurl
+asdf install grpcurl 1.8.8
+asdf local grpcurl 1.8.8
+# check api
+grpcurl -plaintext localhost:50051 list
+grpcurl -plaintext -d '{"name": "World"}' localhost:50051 hello.HelloService/SayHello
+```
+
+## 
+```bash
+vscode ➜ /workspaces/rust-grpc (main) $ grpcurl -plaintext -d '{"condition": "Cloudy"}' localhost:8080 weather.v1.WeatherService/Weather
+{
+  "text": "Today's weather is Cloudy!"
 }
-
-use hello::{
-    hello_service_server::{HelloService, HelloServiceServer},
-    HelloRequest, HelloResponse,
-};
-use tonic::{Request, Response, Status};
-use tonic_reflection::server::Builder;
-
-pub struct MyHelloService {}
-
-#[tonic::async_trait]
-impl HelloService for MyHelloService {
-    async fn say_hello(
-        &self,
-        request: Request<HelloRequest>,
-    ) -> Result<Response<HelloResponse>, Status> {
-        let res = HelloResponse {
-            message: format!("Hello, {}!", request.into_inner().name),
-        };
-        Ok(Response::new(res))
-    }
-}
-
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = "127.0.0.1:50051".parse()?;
-    let hello_service = MyHelloService {};
-
-    tonic::transport::Server::builder()
-        .add_service(HelloServiceServer::new(hello_service))
-        .add_service(
-            Builder::configure()
-                .register_encoded_file_descriptor_set(tonic::include_file_descriptor_set!(
-                    "hello_descriptor"
-                ))
-                .build()
-                .unwrap(),
-        )
-        .serve(addr)
-        .await?;
-
-    Ok(())
-}
+vscode ➜ /workspaces/rust-grpc (main)
 ```

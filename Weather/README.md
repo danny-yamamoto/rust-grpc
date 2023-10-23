@@ -23,9 +23,8 @@ grpcurl -plaintext -d '{"name": "World"}' localhost:50051 hello.HelloService/Say
 
 ## 
 ```bash
-vscode ➜ /workspaces/rust-grpc (main) $ grpcurl -plaintext -d '{"condition": "Cloudy"}' localhost:8080 weather.v1.WeatherService/Weather
+grpcurl -plaintext -d '{"condition": "Cloudy"}' localhost:8080 weather.v1.WeatherService/Weather
 {
   "text": "Today's weather is Cloudy!"
 }
-vscode ➜ /workspaces/rust-grpc (main)
 ```

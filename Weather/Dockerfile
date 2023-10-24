@@ -1,4 +1,4 @@
-FROM rust:1.73.0-buster
+FROM rust:1.73.0-buster  as build-env
 RUN apt-get update && apt-get install -y protobuf-compiler
 WORKDIR /app
 COPY . /app

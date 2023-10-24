@@ -16,13 +16,11 @@ asdf plugin add grpcurl
 asdf list all grpcurl
 asdf install grpcurl 1.8.8
 asdf local grpcurl 1.8.8
-# check api
-grpcurl -plaintext localhost:50051 list
-grpcurl -plaintext -d '{"name": "World"}' localhost:50051 hello.HelloService/SayHello
 ```
 
 ## 
 ```bash
+grpcurl -plaintext localhost:8080 list
 grpcurl -plaintext -d '{"condition": "Cloudy"}' localhost:8080 weather.v1.WeatherService/Weather
 {
   "text": "Today's weather is Cloudy!"
